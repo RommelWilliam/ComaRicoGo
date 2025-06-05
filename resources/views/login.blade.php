@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Login Cliente</title>
+    @vite('resources/css/app.css')
 </head>
 <body>
-    <h2>Iniciar Sesión</h2>
+    <h2 class="text-3xl font-bold underline">Iniciar Sesión</h2>
 
    @if(session('error'))
     <p style="color:red;">{{ session('error') }}</p>
