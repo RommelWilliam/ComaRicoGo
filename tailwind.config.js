@@ -4,9 +4,14 @@ module.exports = {
     "./resources/**/*.blade.php",
     "./resources/**/*.js",
     "./resources/**/*.vue",
+    "./public/assets/**"
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'login_img': "url('/public/assets/login_img.jfif')",
+      },
+    },
   },
   plugins: [],
 }
