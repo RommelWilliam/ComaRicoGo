@@ -1,6 +1,6 @@
-<div class="flex justify-between items-center w-full h-16 bg-white shadow-md px-4">
+<div class="flex justify-between items-center w-full h-16 bg-white shadow-md px-4 py-10 sticky top-0 z-50">
     <div class="text-2xl font-bold text-orange-500">COMARICO GO!</div>
-    <form class="flex justify-stretch flex-1 mx-10 max-w-96">
+    <form class="flex justify-stretch flex-1 mx-8 max-w-3xl">
         <input type="text" id="producto_buscado" class="flex-1 h-10 px-4 border-2 border-gray-300 rounded-lg outline-none" placeholder="Buscar platillo...">
         <button class=" px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600">Buscar</button>
     </form>
