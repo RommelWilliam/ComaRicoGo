@@ -24,4 +24,23 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'Credenciales incorrectas');
         }
     }
+
+    public function registrarCliente(Request $request)
+    {
+        $cliente = Cliente::where('correo', $request->correo)->first();
+        if ($cliente) {
+            return redirect()->back()->with('error', 'El correo ya está registrado');
+        }
+        else{
+            $cliente = new Cliente();
+            $cliente->nombre = $request->nombre;
+            $cliente->correo = $request->correo;
+            $cliente->password = Hash::make($request->password);
+            $cliente->rol = 'cliente'; // Asignar rol por defecto
+            $cliente->save();
+
+            session(['cliente_id' => $cliente->id]);
+            return redirect('/menu');
+        }
+    }
 }

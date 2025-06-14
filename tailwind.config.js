@@ -6,7 +6,11 @@ module.exports = {
     './resources/**/*.vue',
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'login_img': "url('/public/assets/login_img.jfif')",
+      }
+    },
   },
   plugins: [],
 }

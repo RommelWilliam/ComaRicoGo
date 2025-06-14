@@ -5,7 +5,10 @@ use App\Http\Controllers\PlatilloController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrdenController;
 
-
+Route::post('/registrar', [AuthController::class, 'registrarCliente'])->name('registrar.cliente');
+Route::get('/registrar', function () {
+    return view('registrar_cliente');
+})->name('registrar.formulario');
 Route::get('/menu', [PlatilloController::class, 'index']);
 Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.cliente');
