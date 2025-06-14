@@ -30,6 +30,18 @@
                 <textarea name="nota" rows="4" cols="50" placeholder="Ej: Sin cebolla, con sal extra..."
                 class="w-full outline-none border border-gray-600 rounded-lg focus:border-orange-500 "></textarea>
 
+                <br><br>
+
+                <label class="text-lg w-full text-left">Nombre de contacto:</label><br>
+                <input type="text" name="contacto_nombre" placeholder="Ej: Juan Pérez"
+                class="w-full outline-none border border-gray-600 rounded-lg focus:border-orange-500">
+
+                <br>
+
+                <label class="text-lg w-full text-left">Teléfono:</label><br>
+                <input type="text" name="contacto_telefono" placeholder="Ej: 7777-8888"
+                class="w-full outline-none border border-gray-600 rounded-lg focus:border-orange-500">
+
                 <button type="submit" class="p-4 my-4 text-white rounded-lg bg-orange-500 hover:bg-orange-700 text-lg font-bold">Finalizar orden</button>
             </form>
         </div>

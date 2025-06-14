@@ -13,6 +13,8 @@ class Orden extends Model
         'cliente_id',
         'total',
         'nota',
+        'contacto_nombre',
+        'contacto_telefono',
     ];
     public function platillos()
 {

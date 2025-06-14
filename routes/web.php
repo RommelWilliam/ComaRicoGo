@@ -12,3 +12,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.cliente');
 Route::post('/orden', [OrdenController::class, 'enviar'])->name('orden.enviar');
 Route::post('/orden/{id}/nota', [OrdenController::class, 'guardarNota'])->name('orden.guardarNota');
 Route::get('/orden/{id}/descargar', [OrdenController::class, 'descargarPDF'])->name('orden.descargarPDF');
+Route::get('/logout', function () {
+    session()->forget('cliente_id');
+    return redirect('/login');
+})->name('logout');

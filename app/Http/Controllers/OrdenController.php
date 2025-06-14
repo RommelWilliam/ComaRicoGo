@@ -66,6 +66,8 @@ class OrdenController extends Controller
     {
         $orden = Orden::findOrFail($id);
     $orden->nota = $request->input('nota');
+     $orden->contacto_nombre = $request->input('contacto_nombre');
+    $orden->contacto_telefono = $request->input('contacto_telefono');
     $orden->save();
 
     return view('orden_completa', ['orden' => $orden]);
