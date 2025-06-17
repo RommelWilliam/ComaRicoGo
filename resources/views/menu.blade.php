@@ -9,7 +9,7 @@
 </head>
 <body class="">
     <x-top_bar/>
-    <div class="bg-gray-200 p-4 h-screen">
+    <div class="bg-gray-200 p-4 h-full">
         <div class="rounded-lg shadow-lg bg-white p-6 max-w-4xl mx-auto">
             <h1 class="text-2xl font-bold text-center">Menú</h1>
             <form action="{{ route('orden.enviar') }}" method="POST" class="flex flex-col items-center">
