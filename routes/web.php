@@ -19,3 +19,18 @@ Route::get('/logout', function () {
     session()->forget('cliente_id');
     return redirect('/login');
 })->name('logout');
+
+// Rutas del negocio
+Route::get('/negocio/login', function () {
+    return view('negocio.login');
+})->name('negocio.login.formulario');
+Route::post('/negocio/login', [AuthController::class, 'loginUsuarioNegocio'])->name('negocio.login.submit');
+
+Route::get('/negocio/registrar', function () {
+    return view('negocio.registrar_usuario');
+})->name('negocio.registrar.formulario');
+Route::post('/negocio/registrar', [AuthController::class, 'registrarUsuarioNegocio'])->name('negocio.registrarUsuario.submit');
+
+Route::get('/negocio/admin/dashboard', function () {
+    return view('negocio.dashboard_admin');
+})->name('negocio.admin.dashboard');
