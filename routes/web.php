@@ -34,3 +34,12 @@ Route::post('/negocio/registrar', [AuthController::class, 'registrarUsuarioNegoc
 Route::get('/negocio/admin/dashboard', function () {
     return view('negocio.dashboard_admin');
 })->name('negocio.admin.dashboard');
+
+Route::get('/negocio/admin/gestion/menu', [App\Http\Controllers\Negocio\MenuController::class, 'obtenerPlatillos'
+])->name('negocio.admin.gestion_menu');
+
+Route::post('/negocio/admin/gestion/menu/agregar', [App\Http\Controllers\Negocio\MenuController::class, 'guardarNuevoPlatillo'
+])->name('negocio.admin.agregar_platillo');
+
+Route::delete('/negocio/admin/gestion/menu/eliminar', [App\Http\Controllers\Negocio\MenuController::class, 'eliminarPlatillo'
+])->name('negocio.admin.eliminar_platillo');
