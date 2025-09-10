@@ -41,5 +41,11 @@ Route::get('/negocio/admin/gestion/menu', [App\Http\Controllers\Negocio\MenuCont
 Route::post('/negocio/admin/gestion/menu/agregar', [App\Http\Controllers\Negocio\MenuController::class, 'guardarNuevoPlatillo'
 ])->name('negocio.admin.agregar_platillo');
 
+Route::get('/negocio/admin/gestion/menu/editar/{id}', [App\Http\Controllers\Negocio\MenuController::class, 'editarPlatillo'
+])->name('negocio.admin.editar_platillo');
+
+Route::put('/negocio/admin/gestion/menu/actualizar', [App\Http\Controllers\Negocio\MenuController::class, 'actualizarPlatillo'
+])->name('negocio.admin.actualizar_platillo');
+
 Route::delete('/negocio/admin/gestion/menu/eliminar', [App\Http\Controllers\Negocio\MenuController::class, 'eliminarPlatillo'
 ])->name('negocio.admin.eliminar_platillo');

@@ -38,4 +38,36 @@ class MenuController extends Controller
         }
         return redirect()->back()->with('error', 'Platillo no encontrado.');
     }
+
+    public function editarPlatillo(Request $request, $id)
+    {
+        $platillo = Platillo::find($id);
+        if ($platillo) {
+            return response()->json(['platillo_edit' => $platillo]);
+        }
+        return redirect()->back()->with('error', 'Platillo no encontrado');
+    }
+
+    public function actualizarPlatillo(Request $request)
+    {
+        $platillo = Platillo::find($request->platilloId);
+        if ($platillo) {
+            $platillo->nombre = $request->nombrePlatillo;
+            $platillo->precio = $request->precioPlatillo;
+            $platillo->cantidad = $request->cantidadPlatillo;
+            if($request->cantidadPlatillo > 0){
+                $platillo->disponible = $request->disponible ? 1 : 0;    
+            }
+            else{
+                $platillo->disponible = 0;    
+            }
+            $platillo->descripcion = $request->descripcionPlatillo;
+
+            if($platillo->save())
+                return redirect('/negocio/admin/gestion/menu')->with('success', 'Platillo actualizado correctamente.');
+            else
+                return redirect()->back()->with('error', 'Error al actualizar el platillo. Intente nuevamente.');
+        }
+        return redirect()->back()->with('error', 'Platillo no encontrado.');
+    }
 }
