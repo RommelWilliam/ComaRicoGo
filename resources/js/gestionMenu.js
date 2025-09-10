@@ -46,3 +46,31 @@ Array.from(btns_edit).forEach(function(button) {
             });
     });
 });
+
+//Lógica para alternar entre platillos disponibles y no disponibles
+const btnCategoriaDisp = document.getElementById('categoriaDisponibles');
+const btnCategoriaNoDisp = document.getElementById('categoriaNoDisponibles');
+var filaPlatillosDisp = Array.from(document.getElementsByClassName('platillosDisp'));
+var filaPlatillosNoDisp = Array.from(document.getElementsByClassName('platillosNoDisp'));
+
+btnCategoriaDisp.addEventListener('click', function() {
+    filaPlatillosDisp.forEach(
+        (element) => element.classList.remove('hidden')
+    );
+    filaPlatillosNoDisp.forEach(
+        (element) => element.classList.add('hidden')
+    );
+    btnCategoriaDisp.classList.add('border','border-b-0', 'border-slate-400');
+    btnCategoriaNoDisp.classList.remove('border','border-b-0', 'border-slate-400');
+});
+
+btnCategoriaNoDisp.addEventListener('click', function() {
+    filaPlatillosNoDisp.forEach(
+        (element) => element.classList.remove('hidden')
+    );
+    filaPlatillosDisp.forEach(
+        (element) => element.classList.add('hidden')
+    );
+    btnCategoriaNoDisp.classList.add('border','border-b-0', 'border-slate-400');
+    btnCategoriaDisp.classList.remove('border','border-b-0', 'border-slate-400');
+});

@@ -44,43 +44,66 @@
             >
                 Agregar platillo
             </button>
-            <table class="min-w-full bg-white border border-gray-200">
-                <thead>
-                    <tr>
-                        <th class="py-2 px-4 border-b">Nombre de Producto</th>
-                        <th class="py-2 px-4 border-b">Descripción</th>
-                        <th class="py-2 px-4 border-b">Cantidad</th>
-                        <th class="py-2 px-4 border-b">Precio</th>
-                        <th class="py-2 px-4 border-b">Disponibilidad</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($platillos as $platillo)
-                    <tr>
-                        <td class="py-2 px-4 border-b">{{ $platillo->nombre }}</td>
-                        <td class="py-2 px-4 border-b text-ellipsis">{{ $platillo->descripcion }}</td>
-                        <td class="py-2 px-4 border-b">{{ $platillo->cantidad }} unidades</td>
-                        <td class="py-2 px-4 border-b">${{ number_format($platillo->precio, 2) }}</td>
-                        <td class="py-2 px-4 border-b">
-                            @if($platillo->disponible)
-                                <span class="text-green-600 font-semibold">Disponible</span>
-                            @else
+            <div class="flex w-full">
+                <button id="categoriaDisponibles" class="bg-white border border-b-0 border-slate-400 text-lg p-3">Disponibles</button>
+                <button id="categoriaNoDisponibles" class="bg-white text-lg p-3">No Disponibles</button>
+            </div>         
+            <div  class="flex-1">
+                <table class="min-w-full bg-white border border-gray-200">
+                    <thead>
+                        <tr>
+                            <th class="py-2 px-4 border-b">Nombre de Producto</th>
+                            <th class="py-2 px-4 border-b">Descripción</th>
+                            <th class="py-2 px-4 border-b">Cantidad</th>
+                            <th class="py-2 px-4 border-b">Precio</th>
+                            <th class="py-2 px-4 border-b">Disponibilidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($platillos as $platillo)
+                        @if ($platillo->disponible > 0)   
+                        <tr class="platillosDisp">
+                            <td class="py-2 px-4 border-b">{{ $platillo->nombre }}</td>
+                            <td class="py-2 px-4 border-b text-ellipsis">{{ $platillo->descripcion }}</td>
+                            <td class="py-2 px-4 border-b">{{ $platillo->cantidad }} unidades</td>
+                            <td class="py-2 px-4 border-b">${{ number_format($platillo->precio, 2) }}</td>
+                            <td class="py-2 px-4 border-b">
+                                    <span class="text-green-600 font-semibold">Disponible</span>
+                            </td>
+                            <td class="py-2 px-4 border-b flex gap-2">
+                                <button value="{{ $platillo->id }}" class="BTN_EDIT bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">Editar</button>
+                                <form action="{{ route("negocio.admin.eliminar_platillo") }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este platillo?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="platillo_id" value="{{ $platillo->id }}">
+                                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @else
+                        <tr class="platillosNoDisp hidden">
+                            <td class="py-2 px-4 border-b">{{ $platillo->nombre }}</td>
+                            <td class="py-2 px-4 border-b text-ellipsis">{{ $platillo->descripcion }}</td>
+                            <td class="py-2 px-4 border-b">{{ $platillo->cantidad }} unidades</td>
+                            <td class="py-2 px-4 border-b">${{ number_format($platillo->precio, 2) }}</td>
+                            <td class="py-2 px-4 border-b">
                                 <span class="text-red-600 font-semibold">No disponible</span>
-                            @endif
-                        </td>
-                        <td class="py-2 px-4 border-b flex gap-2">
-                            <button value="{{ $platillo->id }}" class="BTN_EDIT bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">Editar</button>
-                            <form action="{{ route("negocio.admin.eliminar_platillo") }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este platillo?');">
-                                @csrf
-                                @method('DELETE')
-                                <input type="hidden" name="platillo_id" value="{{ $platillo->id }}">
-                                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                            </td>
+                            <td class="py-2 px-4 border-b flex gap-2">
+                                <button value="{{ $platillo->id }}" class="BTN_EDIT bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">Editar</button>
+                                <form action="{{ route("negocio.admin.eliminar_platillo") }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este platillo?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="hidden" name="platillo_id" value="{{ $platillo->id }}">
+                                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endif
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
    
