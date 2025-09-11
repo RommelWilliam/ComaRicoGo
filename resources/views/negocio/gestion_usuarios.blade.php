@@ -51,8 +51,8 @@
                 Crear rol
             </button>
             <div class="flex w-full">
-                <button id="categoriaDisponibles" class="bg-white border border-b-0 border-slate-400 text-lg p-3">Usuarios</button>
-                <button id="categoriaNoDisponibles" class="bg-white text-lg p-3">Roles</button>
+                <button id="usuariosTab" class="bg-white border border-b-0 border-slate-400 text-lg p-3">Usuarios</button>
+                <button id="rolesTab" class="bg-white text-lg p-3">Roles</button>
             </div>
             <div id="tablaUsuarios" class="flex-1">
                 <table class="min-w-full bg-white border border-gray-200">
@@ -89,7 +89,7 @@
             <div id="editarRolModal" class="hidden">
                 <x-rolModal type="editar"/>
             </div>         
-            <div id="tablaRoles" class="flex-1">
+            <div id="tablaRoles" class="flex-1 hidden">
                 <table class="min-w-full bg-white border border-gray-200">
                     <thead>
                         <tr>

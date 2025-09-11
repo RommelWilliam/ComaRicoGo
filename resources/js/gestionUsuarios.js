@@ -81,3 +81,24 @@ Array.from(btns_edit_rol).forEach(function(button) {
             });
     });
 });
+
+
+//Lógica par alternar entre usuarios y roles
+const btnUsuarios = document.getElementById('usuariosTab');
+const btnRoles = document.getElementById('rolesTab');
+var tablaUsuarios = document.getElementById('tablaUsuarios');
+var tablaRoles = document.getElementById('tablaRoles');
+
+btnUsuarios.addEventListener('click', function() {
+    tablaUsuarios.classList.remove('hidden');
+    tablaRoles.classList.add('hidden');
+    btnUsuarios.classList.add('border','border-b-0', 'border-slate-400');
+    btnRoles.classList.remove('border','border-b-0', 'border-slate-400');
+});
+
+btnRoles.addEventListener('click', function() {
+    tablaUsuarios.classList.add('hidden');
+    tablaRoles.classList.remove('hidden');    
+    btnUsuarios.classList.remove('border','border-b-0', 'border-slate-400');
+    btnRoles.classList.add('border','border-b-0', 'border-slate-400');
+});
