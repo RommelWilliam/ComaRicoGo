@@ -7,13 +7,17 @@
     <title>Document</title>
     @vite('resources/css/app.css')
 </head>
-<body>
+<body class="h-screen">
     <x-top_bar/>
     <div class="flex">
         <x-side_bar/>
-        <div class="p-10 flex-1">
-            <h1>DASHBOARD ADMIN</h1>
-            <a href="{{ route("negocio.admin.gestion_menu") }}" class="text-xl text-bg-slate-800">Gestionar Platillos</a>
+        <div class="p-10 flex-1 h-full">
+            <div>DASHBOARD ADMIN</div>
+            <div class="my-10">
+                <a href="{{ route("negocio.admin.gestion_menu") }}" class="my-5 p-5 text-xl text-bg-slate-800 border border-slate-600">Gestionar Menú</a>
+                <a href="{{ route("negocio.admin.gestion_usuarios_roles") }}" class="my-2 p-5 text-xl text-bg-slate-800 border border-slate-600">Gestionar Usuarios</a>
+            </div>
+            
         </div>
     </div>
 </body>

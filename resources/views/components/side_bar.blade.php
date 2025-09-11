@@ -43,7 +43,7 @@
                 </li>
                 <li>
                     <a href="{{ route("negocio.admin.gestion_usuarios_roles") }}" class="block py-2 px-4 rounded hover:bg-gray-700">
-                        Gestión de Usuarios y roles
+                        Gestión de Usuarios y Roles
                     </a>
                 </li>
             </ul>

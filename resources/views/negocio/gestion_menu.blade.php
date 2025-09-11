@@ -36,7 +36,7 @@
     </div>
     <div class="flex">
         <x-side_bar/>  
-        <div class="container p-10">
+        <div class="container p-10 overflow-scroll h-screen">
             <h1 class="text-2xl font-bold mb-4">Gestión del Menú</h1>
             <button 
                 onclick="document.getElementById('agregarPlatilloModal').classList.remove('hidden');" 
@@ -49,7 +49,7 @@
                 <button id="categoriaNoDisponibles" class="bg-white text-lg p-3">No Disponibles</button>
             </div>         
             <div  class="flex-1">
-                <table class="min-w-full bg-white border border-gray-200">
+                <table class="min-w-full bg-white border border-gray-200 max-w-5xl">
                     <thead>
                         <tr>
                             <th class="py-2 px-4 border-b">Imágen</th>
@@ -64,7 +64,7 @@
                     <tbody>
                         @foreach($platillos as $platillo)
                         @if ($platillo->disponible > 0)   
-                        <tr class="platillosDisp">
+                        <tr class="platillosDisp hover:bg-orange-100">
                             <td class="py-2 px-4 border-b">
                                 @if ($platillo->img)
                                 <img src="{{ asset('platillos/' . $platillo->img) }}" alt="Imagen de {{ $platillo->nombre }}" class="w-16 h-16 object-cover rounded">    
@@ -88,7 +88,7 @@
                             </td>
                         </tr>
                         @else
-                        <tr class="platillosNoDisp hidden">
+                        <tr class="platillosNoDisp hover:bg-orange-100 hidden">
                             <td class="py-2 px-4 border-b">
                                 @if ($platillo->img)
                                 <img src="{{ asset('platillos/' . $platillo->img) }}" alt="Imagen de {{ $platillo->nombre }}" class="w-16 h-16 object-cover rounded">    
