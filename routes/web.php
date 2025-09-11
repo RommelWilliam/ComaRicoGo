@@ -24,13 +24,8 @@ Route::get('/logout', function () {
 Route::get('/negocio/login', function () {
     return view('negocio.login');
 })->name('negocio.login.formulario');
+
 Route::post('/negocio/login', [AuthController::class, 'loginUsuarioNegocio'])->name('negocio.login.submit');
-
-Route::get('/negocio/registrar', function () {
-    return view('negocio.registrar_usuario');
-})->name('negocio.registrar.formulario');
-Route::post('/negocio/registrar', [AuthController::class, 'registrarUsuarioNegocio'])->name('negocio.registrarUsuario.submit');
-
 
 // Agrupar rutas de administración bajo el middleware admin.negocio
 Route::middleware(['admin.negocio'])->group(function () {

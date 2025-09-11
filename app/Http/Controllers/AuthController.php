@@ -48,32 +48,6 @@ class AuthController extends Controller
         }
     }
 
-    public function registrarUsuarioNegocio(Request $request)
-    {
-        $usuarioNegocio = UsuarioNegocio::where('correo', $request->correo)->first();
-        if ($usuarioNegocio) {
-            return redirect()->back()->with('error', 'El correo ya está registrado');
-        }
-        else{
-            $usuarioNegocio = new UsuarioNegocio();
-            $usuarioNegocio->nombre = $request->nombre;
-            $usuarioNegocio->correo = $request->correo; 
-            $usuarioNegocio->password = Hash::make($request->password);
-
-            if($request->rol == 'administrador'){
-                $rol = Rol::where('nombre', 'administrador')->first();
-                $usuarioNegocio->rol_id = $rol->id; // Asignar rol de admin
-            } else {
-                $rol = Rol::where('nombre', 'cocinero')->first();
-                $usuarioNegocio->rol_id = $rol->id; // Asignar rol cocinero
-            }
-
-            $usuarioNegocio->save();
-            session(['usuarioNegocio_id' => $usuarioNegocio->id]);
-            return redirect('/negocio/login');
-        }
-    }
-
     public function loginUsuarioNegocio(Request $request)
     {
         $usuario = UsuarioNegocio::where('correo', $request->correo)->first();

@@ -7,11 +7,11 @@
     <title>Login Administración</title>
     @vite('resources/css/app.css')
 </head>
-<body class="flex justify-end w-screen h-screen min-h-screen bg-login_img bg-cover bg-no-repeat bg-right 
+<body class="flex justify-end w-screen h-screen min-h-screen bg-login_negocio_img bg-cover bg-no-repeat bg-top 
     max-md:justify-center max-md:items-center max-md:p-8">
     <div class="w-2/5 h-full px-10 flex flex-col justify-center items-stretch rounded-s-2xl bg-white shadow-lg 
         max-md:w-full max-md:rounded-xl max-md:px-5 max-md:py-8 max-md:h-fit">
-        <h2 class="text-2xl font-bold uppercase text-center mb-8 max-md:text-xl">¡BIENVENIDO EMPLEADO!</h2>
+        <h2 class="text-2xl font-bold uppercase text-center mb-8 max-md:text-xl">¡Bienvenido de nuevo 👋 personal!</h2>
         @if(session('error'))
             <p style="color:red;">{{ session('error') }}</p>
         @endif
@@ -34,7 +34,6 @@
                 <input type="password" name="password" placeholder="Contraseña" required 
                 class="w-full h-auto text-lg 5 outline-none ms-2 ">
             </div>
-            <a href="{{ route('negocio.registrar.formulario') }}" class="text-center text-orange-500 hover:text-orange-600 hover:underline">¿No tienes una cuenta? Regístrate aquí</a>
             <button type="submit" class=" w-full p-3 mt-5 text-center uppercase bg-orange-500 rounded-lg text-white hover:bg-orange-600">Ingresar</button>
 
             <!-- Campos ocultos para detalles del dispositivo -->

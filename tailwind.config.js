@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       backgroundImage: {
         'login_img': "url('/public/assets/login_img.jfif')",
+        'login_negocio_img': "url('/public/assets/login_negocio.jpg')",
       }
     },
   },
