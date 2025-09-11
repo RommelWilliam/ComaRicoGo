@@ -81,7 +81,7 @@ class AuthController extends Controller
     {
         $usuario = UsuarioNegocio::where('correo', $request->correo)->first();
         if($usuario && Hash::check($request->password, $usuario->password)) {
-            session(['usuarioNegocio_id' => $usuario->id]);
+            session(['usuarioNegocio_id' => $usuario->id, 'rol' => Rol::find($usuario->rol_id)->nombre]);
             $sesion = new Sesion();
             $sesion->usuario_id = $usuario->id;
             $sesion->inicio_sesion = now();

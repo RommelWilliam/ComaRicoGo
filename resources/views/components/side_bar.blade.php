@@ -42,8 +42,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="block py-2 px-4 rounded hover:bg-gray-700">
-                        Gestión de Clientes
+                    <a href="{{ route("negocio.admin.gestion_usuarios_roles") }}" class="block py-2 px-4 rounded hover:bg-gray-700">
+                        Gestión de Usuarios y roles
                     </a>
                 </li>
             </ul>
