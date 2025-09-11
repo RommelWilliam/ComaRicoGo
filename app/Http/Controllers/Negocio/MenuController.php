@@ -18,10 +18,17 @@ class MenuController extends Controller
     {
         $platillo = new Platillo();
         $platillo->nombre = $request->nombrePlatillo;
+        $platillo->descripcion = $request->descripcionPlatillo;
         $platillo->precio = $request->precioPlatillo;
         $platillo->cantidad = $request->cantidadPlatillo;
-        $platillo->disponible = $request->disponible ? 1 : 0;
-        $platillo->descripcion = $request->descripcionPlatillo;
+
+        // Almacenar la imagen en public/platillos si existe en la request
+        if ($request->hasFile('img')) {
+            $imagen = $request->file('img');
+            $nombreImagen = $imagen->getClientOriginalName();
+            $imagen->move(public_path('platillos'), $nombreImagen);
+            $platillo->img = $nombreImagen;
+        }
 
         if($platillo->save())
             return redirect('/negocio/admin/gestion/menu')->with('success', 'Platillo agregado correctamente.');
@@ -62,6 +69,14 @@ class MenuController extends Controller
                 $platillo->disponible = 0;    
             }
             $platillo->descripcion = $request->descripcionPlatillo;
+
+            // Almacenar la imagen en public/platillos si existe en la request
+            if ($request->hasFile('img')) {
+                $imagen = $request->file('img');
+                $nombreImagen = $imagen->getClientOriginalName();
+                $imagen->move(public_path('platillos'), $nombreImagen);
+                $platillo->img = $nombreImagen;
+            }
 
             if($platillo->save())
                 return redirect('/negocio/admin/gestion/menu')->with('success', 'Platillo actualizado correctamente.');

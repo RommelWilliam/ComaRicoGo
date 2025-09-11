@@ -15,5 +15,6 @@ class Platillo extends Model
         'disponible',
         'descripcion',
         'precio',
+        'img',
     ];
 }

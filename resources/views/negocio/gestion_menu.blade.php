@@ -52,17 +52,24 @@
                 <table class="min-w-full bg-white border border-gray-200">
                     <thead>
                         <tr>
+                            <th class="py-2 px-4 border-b">Imágen</th>
                             <th class="py-2 px-4 border-b">Nombre de Producto</th>
                             <th class="py-2 px-4 border-b">Descripción</th>
                             <th class="py-2 px-4 border-b">Cantidad</th>
                             <th class="py-2 px-4 border-b">Precio</th>
                             <th class="py-2 px-4 border-b">Disponibilidad</th>
+                            <th class="py-2 px-4 border-b"></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($platillos as $platillo)
                         @if ($platillo->disponible > 0)   
                         <tr class="platillosDisp">
+                            <td class="py-2 px-4 border-b">
+                                @if ($platillo->img)
+                                <img src="{{ asset('platillos/' . $platillo->img) }}" alt="Imagen de {{ $platillo->nombre }}" class="w-16 h-16 object-cover rounded">    
+                                @endif
+                            </td>
                             <td class="py-2 px-4 border-b">{{ $platillo->nombre }}</td>
                             <td class="py-2 px-4 border-b text-ellipsis">{{ $platillo->descripcion }}</td>
                             <td class="py-2 px-4 border-b">{{ $platillo->cantidad }} unidades</td>
@@ -70,7 +77,7 @@
                             <td class="py-2 px-4 border-b">
                                     <span class="text-green-600 font-semibold">Disponible</span>
                             </td>
-                            <td class="py-2 px-4 border-b flex gap-2">
+                            <td class="py-2 px-4 border-b flex h-full">
                                 <button value="{{ $platillo->id }}" class="BTN_EDIT bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-3 rounded">Editar</button>
                                 <form action="{{ route("negocio.admin.eliminar_platillo") }}" method="POST" onsubmit="return confirm('¿Estás seguro de eliminar este platillo?');">
                                     @csrf
@@ -82,6 +89,11 @@
                         </tr>
                         @else
                         <tr class="platillosNoDisp hidden">
+                            <td class="py-2 px-4 border-b">
+                                @if ($platillo->img)
+                                <img src="{{ asset('platillos/' . $platillo->img) }}" alt="Imagen de {{ $platillo->nombre }}" class="w-16 h-16 object-cover rounded">    
+                                @endif
+                            </td>
                             <td class="py-2 px-4 border-b">{{ $platillo->nombre }}</td>
                             <td class="py-2 px-4 border-b text-ellipsis">{{ $platillo->descripcion }}</td>
                             <td class="py-2 px-4 border-b">{{ $platillo->cantidad }} unidades</td>

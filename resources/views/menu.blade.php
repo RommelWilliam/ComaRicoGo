@@ -17,6 +17,7 @@
 
                 @foreach ($platillos as $platillo)
                     <div class="w-full border border-gray-400 rounded-lg my-4 flex p-4">
+                        <img src="{{ asset('platillos/' . $platillo->img) }}" alt="Imágen de {{ $platillo->nombre }}" class="w-32 h-32 object-cover rounded-lg mr-4">
                         <div class="flex-1">
                             <h3 class="font-bold">{{ $platillo->nombre }}</h3>
                             <p>{{ $platillo->descripcion }}</p>
