@@ -16,7 +16,7 @@ Route::post('/orden', [OrdenController::class, 'enviar'])->name('orden.enviar');
 Route::post('/orden/{id}/nota', [OrdenController::class, 'guardarNota'])->name('orden.guardarNota');
 Route::get('/orden/{id}/descargar', [OrdenController::class, 'descargarPDF'])->name('orden.descargarPDF');
 Route::get('/logout', function () {
-    session()->forget('cliente_id');
+    session()->flush();
     return redirect('/login');
 })->name('logout');
 
@@ -31,49 +31,54 @@ Route::get('/negocio/registrar', function () {
 })->name('negocio.registrar.formulario');
 Route::post('/negocio/registrar', [AuthController::class, 'registrarUsuarioNegocio'])->name('negocio.registrarUsuario.submit');
 
-Route::get('/negocio/admin/dashboard', function () {
-    return view('negocio.dashboard_admin');
-})->name('negocio.admin.dashboard');
 
-Route::get('/negocio/admin/gestion/menu', [App\Http\Controllers\Negocio\MenuController::class, 'obtenerPlatillos'
-])->name('negocio.admin.gestion_menu');
+// Agrupar rutas de administración bajo el middleware admin.negocio
+Route::middleware(['admin.negocio'])->group(function () {
+    //Rutas para la gestión del menú
+    Route::get('/negocio/admin/dashboard', function () {
+        return view('negocio.dashboard_admin');
+    })->name('negocio.admin.dashboard');
 
-Route::post('/negocio/admin/gestion/menu/agregar', [App\Http\Controllers\Negocio\MenuController::class, 'guardarNuevoPlatillo'
-])->name('negocio.admin.agregar_platillo');
+    Route::get('/negocio/admin/gestion/menu', [App\Http\Controllers\Negocio\MenuController::class, 'obtenerPlatillos'])
+        ->name('negocio.admin.gestion_menu');
 
-Route::get('/negocio/admin/gestion/menu/editar/{id}', [App\Http\Controllers\Negocio\MenuController::class, 'editarPlatillo'
-])->name('negocio.admin.editar_platillo');
+    Route::post('/negocio/admin/gestion/menu/agregar', [App\Http\Controllers\Negocio\MenuController::class, 'guardarNuevoPlatillo'])
+        ->name('negocio.admin.agregar_platillo');
 
-Route::put('/negocio/admin/gestion/menu/actualizar', [App\Http\Controllers\Negocio\MenuController::class, 'actualizarPlatillo'
-])->name('negocio.admin.actualizar_platillo');
+    Route::get('/negocio/admin/gestion/menu/editar/{id}', [App\Http\Controllers\Negocio\MenuController::class, 'editarPlatillo'])
+        ->name('negocio.admin.editar_platillo');
 
-Route::delete('/negocio/admin/gestion/menu/eliminar', [App\Http\Controllers\Negocio\MenuController::class, 'eliminarPlatillo'
-])->name('negocio.admin.eliminar_platillo');
+    Route::put('/negocio/admin/gestion/menu/actualizar', [App\Http\Controllers\Negocio\MenuController::class, 'actualizarPlatillo'])
+        ->name('negocio.admin.actualizar_platillo');
 
-// Rutas para la gestión de roles solo accesible par administradores
-Route::get('/negocio/admin/gestion/usuarios', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'listarUsuariosRoles'
-])->name('negocio.admin.gestion_usuarios_roles');
+    Route::delete('/negocio/admin/gestion/menu/eliminar', [App\Http\Controllers\Negocio\MenuController::class, 'eliminarPlatillo'])
+        ->name('negocio.admin.eliminar_platillo');
 
-Route::get('/negocio/admin/gestion/usuarios/{id}', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'getUsuario'
-])->name('negocio.admin.obtener_usuario');
+    // Rutas para la gestión de usuarios y roles
+    Route::get('/negocio/admin/gestion/usuarios', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'listarUsuariosRoles'])
+        ->name('negocio.admin.gestion_usuarios_roles');
 
-Route::post('/negocio/admin/gestion/usuarios/crear', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'crearUsuario'
-])->name('negocio.admin.crear_usuario');
+    Route::get('/negocio/admin/gestion/usuarios/{id}', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'getUsuario'])
+        ->name('negocio.admin.obtener_usuario');
 
-Route::put('/negocio/admin/gestion/usuarios/actualizar', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'actualizarUsuario'
-])->name('negocio.admin.actualizar_usuario');
+    Route::post('/negocio/admin/gestion/usuarios/crear', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'crearUsuario'])
+        ->name('negocio.admin.crear_usuario');
 
-Route::delete('/negocio/admin/gestion/usuarios/eliminar', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'eliminarUsuario'
-])->name('negocio.admin.eliminar_usuario');
+    Route::put('/negocio/admin/gestion/usuarios/actualizar', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'actualizarUsuario'])
+        ->name('negocio.admin.actualizar_usuario');
 
-Route::get('/negocio/admin/gestion/rol/{id}', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'getRol'
-])->name('negocio.admin.obtener_rol');
+    Route::delete('/negocio/admin/gestion/usuarios/eliminar', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'eliminarUsuario'])
+        ->name('negocio.admin.eliminar_usuario');
 
-Route::post('/negocio/admin/gestion/rol/crear', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'crearRol'
-])->name('negocio.admin.crear_rol');
+    Route::get('/negocio/admin/gestion/rol/{id}', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'getRol'])
+        ->name('negocio.admin.obtener_rol');
 
-Route::put('/negocio/admin/gestion/rol/actualizar', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'actualizarRol'
-])->name('negocio.admin.actualizar_rol');
+    Route::post('/negocio/admin/gestion/rol/crear', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'crearRol'])
+        ->name('negocio.admin.crear_rol');
 
-Route::delete('/negocio/admin/gestion/rol/eliminar', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'eliminarRol'
-])->name('negocio.admin.eliminar_rol');
+    Route::put('/negocio/admin/gestion/rol/actualizar', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'actualizarRol'])
+        ->name('negocio.admin.actualizar_rol');
+
+    Route::delete('/negocio/admin/gestion/rol/eliminar', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'eliminarRol'])
+        ->name('negocio.admin.eliminar_rol');
+});

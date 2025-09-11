@@ -14,9 +14,6 @@ class AuthController extends Controller
 {
     public function mostrarLogin()
     {
-        if (session()->has('cliente_id')) {
-            return redirect('/menu');
-        }
         return view('login');
     }
 
@@ -81,7 +78,7 @@ class AuthController extends Controller
     {
         $usuario = UsuarioNegocio::where('correo', $request->correo)->first();
         if($usuario && Hash::check($request->password, $usuario->password)) {
-            session(['usuarioNegocio_id' => $usuario->id, 'rol' => Rol::find($usuario->rol_id)->nombre]);
+            session(['usuarioNegocio_id' => $usuario->id]);
             $sesion = new Sesion();
             $sesion->usuario_id = $usuario->id;
             $sesion->inicio_sesion = now();
@@ -91,11 +88,5 @@ class AuthController extends Controller
         } else {
             return redirect()->back()->with('error', 'Credenciales incorrectas');
         }
-    }
-
-    public function logout()
-    {
-        session()->flush();
-        return redirect('/login');
     }
 }
