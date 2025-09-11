@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["php82", "composer", "nodejs", "npm"]
+nixPkgs = ["php82", "composer", "nodejs_18", "npm"]
 
 [phases.build]
 cmds = [
@@ -11,3 +11,5 @@ cmds = [
 
 [start]
 cmd = "php artisan serve --host=0.0.0.0 --port=$PORT"
+
+
