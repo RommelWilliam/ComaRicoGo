@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Gestión del menú</title>
     @Vite('resources/css/app.css')
-    @Vite('resources/js/app.js')
+    @Vite('resources/js/gestionMenu.js')
 </head>
 <body>
     <x-top_bar/>
