@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Gestión de Usuarios y Roles</title>
     @vite('resources/css/app.css')
-    @Vite('resources/js/gestionUsuarios.js')
+    @Vite('resources/js/app.js')
 </head>
 <body>
     <x-top_bar/>
