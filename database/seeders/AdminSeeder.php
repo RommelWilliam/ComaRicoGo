@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -16,15 +15,6 @@ class AdminSeeder extends Seeder
      */
     public function run()
     {
-        
-
-
-
-
-class AdminSeeder extends Seeder
-{
-    public function run()
-    {
         DB::table('usuarios_negocio')->insert([
             'nombre' => 'Administrador',
             'correo' => 'admin@ejemplo.com',
@@ -33,7 +23,5 @@ class AdminSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-    }
-}
     }
 }
