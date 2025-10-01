@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Models\Rol;
 
 class CocineroMiddleware
 {
@@ -18,8 +19,8 @@ class CocineroMiddleware
                 ->with('error', 'Debes iniciar sesión como cocinero');
         }
 
-       
-        if ($rolId != 2) {
+       $rol = Rol::find($rolId);
+        if ($rol->nivel_permisos != 2) {
             return redirect()->route('negocio.login.formulario')
                 ->with('error', 'Acceso no autorizado');
         }

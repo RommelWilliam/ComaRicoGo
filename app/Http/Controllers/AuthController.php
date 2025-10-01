@@ -72,10 +72,11 @@ class AuthController extends Controller
             $sesion->detalles = "Navegador: {$request->navegador}, Plataforma: {$request->plataforma}, Resolución: {$request->resolucion}, Idioma: {$request->idioma}, Zona Horaria: {$request->zona_horaria}";
             $sesion->save();
 
+            $rol = Rol::find($usuario->rol_id);
             // Redirección según rol
-            if ($usuario->rol_id == 1) {
+            if ($rol->nivel_permisos == 1) {
                 return redirect('/negocio/admin/dashboard');
-            } elseif ($usuario->rol_id == 2) {
+            } elseif ($rol->nivel_permisos == 2) {
                 return redirect()->route('cocinero.ordenesPendientes');
             } else {
                 return redirect()->back()->with('error', 'Rol no autorizado.');

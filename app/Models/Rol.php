@@ -10,5 +10,5 @@ class Rol extends Model
     use HasFactory;
 
     protected $table = 'roles';
-    protected $fillable = ['nombre', 'descripcion'];
+    protected $fillable = ['nombre', 'descripcion', 'nivel_permisos'];
 }
