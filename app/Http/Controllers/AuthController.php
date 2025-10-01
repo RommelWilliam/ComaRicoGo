@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Cliente;
 use Illuminate\Support\Facades\Hash;
-use App\Models\usuarioNegocioistrador;
 use App\Models\Rol;
 use App\Models\UsuarioNegocio;
 use App\Models\Sesion;
@@ -17,6 +16,9 @@ class AuthController extends Controller
         return view('login');
     }
 
+    /**
+     * Login de Cliente
+     */
     public function login(Request $request)
     {
         $cliente = Cliente::where('correo', $request->correo)->first();
@@ -29,18 +31,20 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * Registro de Cliente
+     */
     public function registrarCliente(Request $request)
     {
         $cliente = Cliente::where('correo', $request->correo)->first();
         if ($cliente) {
             return redirect()->back()->with('error', 'El correo ya está registrado');
-        }
-        else{
+        } else {
             $cliente = new Cliente();
             $cliente->nombre = $request->nombre;
             $cliente->correo = $request->correo;
             $cliente->password = Hash::make($request->password);
-            $cliente->rol = 'cliente'; // Asignar rol por defecto
+            $cliente->rol = 'cliente'; // Rol por defecto
             $cliente->save();
 
             session(['cliente_id' => $cliente->id]);
@@ -48,19 +52,37 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * Login de Usuarios del Negocio (Admin / Cocinero)
+     */
     public function loginUsuarioNegocio(Request $request)
     {
         $usuario = UsuarioNegocio::where('correo', $request->correo)->first();
-        if($usuario && Hash::check($request->password, $usuario->password)) {
-            session(['usuarioNegocio_id' => $usuario->id]);
+
+        if ($usuario && Hash::check($request->password, $usuario->password)) {
+            session([
+                'usuarioNegocio_id' => $usuario->id,
+                'rol_id' => $usuario->rol_id, // Guardamos el rol en sesión
+            ]);
+
+            // Registrar sesión
             $sesion = new Sesion();
             $sesion->usuario_id = $usuario->id;
             $sesion->inicio_sesion = now();
             $sesion->detalles = "Navegador: {$request->navegador}, Plataforma: {$request->plataforma}, Resolución: {$request->resolucion}, Idioma: {$request->idioma}, Zona Horaria: {$request->zona_horaria}";
             $sesion->save();
-            return redirect('/negocio/admin/dashboard');
+
+            // Redirección según rol
+            if ($usuario->rol_id == 1) {
+                return redirect('/negocio/admin/dashboard');
+            } elseif ($usuario->rol_id == 2) {
+                return redirect()->route('cocinero.ordenesPendientes');
+            } else {
+                return redirect()->back()->with('error', 'Rol no autorizado.');
+            }
         } else {
             return redirect()->back()->with('error', 'Credenciales incorrectas');
         }
     }
 }
+

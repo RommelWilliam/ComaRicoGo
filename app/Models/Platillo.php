@@ -17,4 +17,12 @@ class Platillo extends Model
         'precio',
         'img',
     ];
+
+    public function ordenes()
+{
+    return $this->belongsToMany(Orden::class, 'orden_platillo')
+                ->withPivot('cantidad')
+                ->withTimestamps();
+}
+
 }

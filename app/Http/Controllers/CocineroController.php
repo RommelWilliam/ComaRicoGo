@@ -1,0 +1,116 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\Orden;
+use Illuminate\Support\Facades\DB;
+
+class CocineroController extends Controller
+{
+    /**
+     * Ver todas las órdenes (dashboard general).
+     */
+    public function index()
+    {
+        $ordenes = Orden::with('platillos')->get();
+        return view('cocinero.ordenes', compact('ordenes'));
+    }
+
+    /**
+     * Ver notificaciones del cocinero.
+     */
+    public function notificaciones()
+    {
+        $usuario = auth()->user(); 
+        $notificaciones = $usuario->notifications;
+        return view('cocinero.notificaciones', compact('notificaciones'));
+    }
+
+    /**
+     * Ver las órdenes que el cocinero ya se asignó.
+     */
+    public function ordenesAsignadas()
+    {
+        $cocineroId = session('usuarioNegocio_id'); 
+        
+        $ordenes = Orden::where('cocinero_id', $cocineroId)
+            ->where('estado', 'en_preparacion')
+            ->orderBy('created_at', 'asc')
+            ->with('platillos')
+            ->get();
+
+        return view('cocinero.ordenes_asignadas', compact('ordenes'));
+    }
+
+    /**
+     * Ver las órdenes pendientes (sin cocinero asignado).
+     */
+    public function pendientes()
+    {
+        $ordenes = Orden::whereNull('cocinero_id')
+            ->where('estado', 'recibido')
+            ->orderBy('created_at', 'asc')
+            ->with('platillos')
+            ->get();
+
+        return view('cocinero.ordenes_pendientes', compact('ordenes'));
+    }
+
+    /**
+     * Asignarse una orden.
+     */
+    public function asignarOrden($id)
+    {
+        $cocineroId = session('usuarioNegocio_id'); 
+
+        DB::transaction(function () use ($id, $cocineroId) {
+            $orden = Orden::lockForUpdate()->findOrFail($id);
+
+            if ($orden->cocinero_id !== null) {
+                throw new \Exception("Esta orden ya fue tomada por otro cocinero");
+            }
+
+            $orden->cocinero_id = $cocineroId;
+            $orden->estado = 'en_preparacion'; // ✅ Ahora pasa a "en preparación"
+            $orden->save();
+        });
+
+        return redirect()->route('cocinero.ordenesAsignadas')
+            ->with('success', '¡Orden asignada con éxito!');
+    }
+
+    /**
+     * Finalizar una orden propia.
+     */
+    public function finalizarOrden($id)
+    {
+        $cocineroId = session('usuarioNegocio_id');
+
+        $orden = Orden::where('id', $id)
+            ->where('cocinero_id', $cocineroId)
+            ->firstOrFail();
+
+        $orden->estado = 'listo'; 
+        $orden->save();
+
+        return redirect()->route('cocinero.ordenesAsignadas')
+            ->with('success', '¡Orden finalizada!');
+    }
+
+    /**
+     * Ver las órdenes finalizadas del cocinero.
+     */
+    public function ordenesFinalizadas()
+    {
+        $cocineroId = session('usuarioNegocio_id');
+
+        $ordenes = Orden::where('cocinero_id', $cocineroId)
+            ->where('estado', 'listo')
+            ->with('platillos')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        return view('cocinero.ordenes_finalizadas', compact('ordenes'));
+    }
+}

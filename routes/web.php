@@ -4,36 +4,49 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PlatilloController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrdenController;
+use App\Http\Controllers\CocineroController;
 
+/*
+|--------------------------------------------------------------------------
+| Rutas de Cliente
+|--------------------------------------------------------------------------
+*/
 Route::post('/registrar', [AuthController::class, 'registrarCliente'])->name('registrar.cliente');
 Route::get('/registrar', function () {
     return view('registrar_cliente');
 })->name('registrar.formulario');
+
 Route::get('/menu', [PlatilloController::class, 'index']);
 Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.cliente');
+
 Route::post('/orden', [OrdenController::class, 'enviar'])->name('orden.enviar');
 Route::post('/orden/{id}/nota', [OrdenController::class, 'guardarNota'])->name('orden.guardarNota');
 Route::get('/orden/{id}/descargar', [OrdenController::class, 'descargarPDF'])->name('orden.descargarPDF');
+
 Route::get('/logout', function () {
     session()->flush();
     return redirect('/login');
 })->name('logout');
 
-// Rutas del negocio
+/*
+|--------------------------------------------------------------------------
+| Rutas de Negocio (Administrador)
+|--------------------------------------------------------------------------
+*/
 Route::get('/negocio/login', function () {
     return view('negocio.login');
 })->name('negocio.login.formulario');
 
 Route::post('/negocio/login', [AuthController::class, 'loginUsuarioNegocio'])->name('negocio.login.submit');
 
-// Agrupar rutas de administración bajo el middleware admin.negocio
 Route::middleware(['admin.negocio'])->group(function () {
-    //Rutas para la gestión del menú
+    // Dashboard
     Route::get('/negocio/admin/dashboard', function () {
         return view('negocio.dashboard_admin');
     })->name('negocio.admin.dashboard');
 
+    // Gestión de menú
     Route::get('/negocio/admin/gestion/menu', [App\Http\Controllers\Negocio\MenuController::class, 'obtenerPlatillos'])
         ->name('negocio.admin.gestion_menu');
 
@@ -49,7 +62,7 @@ Route::middleware(['admin.negocio'])->group(function () {
     Route::delete('/negocio/admin/gestion/menu/eliminar', [App\Http\Controllers\Negocio\MenuController::class, 'eliminarPlatillo'])
         ->name('negocio.admin.eliminar_platillo');
 
-    // Rutas para la gestión de usuarios y roles
+    // Gestión de usuarios y roles
     Route::get('/negocio/admin/gestion/usuarios', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'listarUsuariosRoles'])
         ->name('negocio.admin.gestion_usuarios_roles');
 
@@ -76,4 +89,22 @@ Route::middleware(['admin.negocio'])->group(function () {
 
     Route::delete('/negocio/admin/gestion/rol/eliminar', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'eliminarRol'])
         ->name('negocio.admin.eliminar_rol');
+});
+
+/*
+|--------------------------------------------------------------------------
+| Rutas de Cocinero
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['cocinero.negocio'])->group(function () {
+    Route::get('/cocinero/dashboard', [CocineroController::class, 'index'])->name('cocinero.dashboard');
+
+    Route::get('/cocinero/ordenes/pendientes', [CocineroController::class, 'pendientes'])->name('cocinero.ordenesPendientes');
+    Route::post('/cocinero/ordenes/{id}/asignar', [CocineroController::class, 'asignarOrden'])->name('cocinero.asignarOrden');
+
+    Route::get('/cocinero/ordenes/asignadas', [CocineroController::class, 'ordenesAsignadas'])->name('cocinero.ordenesAsignadas');
+    Route::post('/cocinero/ordenes/{id}/finalizar', [CocineroController::class, 'finalizarOrden'])->name('cocinero.finalizarOrden');
+
+    Route::get('/cocinero/ordenes/finalizadas', [CocineroController::class, 'ordenesFinalizadas'])->name('cocinero.ordenesFinalizadas');
+    Route::get('/cocinero/notificaciones', [CocineroController::class, 'notificaciones'])->name('cocinero.notificaciones');
 });

@@ -15,10 +15,21 @@ return new class extends Migration
     {
         Schema::create('ordenes', function (Blueprint $table) {
             $table->id();
-        $table->foreignId('cliente_id')->constrained()->onDelete('cascade');
-        $table->decimal('total', 8, 2)->default(0);
-        $table->text('nota')->nullable();
-        $table->timestamps();
+
+            // Relación con cliente
+            $table->foreignId('cliente_id')->constrained('clientes')->onDelete('cascade');
+
+            // Relación con cocinero (puede ser null hasta que alguien se asigne)
+            $table->foreignId('cocinero_id')->nullable()->constrained('usuarios_negocio')->onDelete('set null');
+
+            // Datos de la orden
+            $table->decimal('total', 8, 2)->default(0);
+            $table->text('nota')->nullable();
+
+            // Estado de la orden
+            $table->enum('estado', ['pendiente', 'en_proceso', 'finalizada'])->default('pendiente');
+
+            $table->timestamps();
         });
     }
 

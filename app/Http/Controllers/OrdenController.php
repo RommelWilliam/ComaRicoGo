@@ -7,6 +7,10 @@ use App\Models\Orden;
 use App\Models\Platillo;
 use Illuminate\Support\Facades\DB;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Models\UsuarioNegocio;
+use App\Notifications\NuevaOrden;
+use Illuminate\Support\Facades\Notification;
+
 
 class OrdenController extends Controller
 {
