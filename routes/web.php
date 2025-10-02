@@ -17,6 +17,7 @@ Route::get('/registrar', function () {
 })->name('registrar.formulario');
 
 Route::get('/menu', [PlatilloController::class, 'index']);
+Route::get('/menu/filtrar', [PlatilloController::class, 'filtrarPorCategoriaPrecio'])->name('menu.filtrar');
 Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.cliente');
 
