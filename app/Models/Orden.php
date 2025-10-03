@@ -16,6 +16,8 @@ class Orden extends Model
         'contacto_nombre',
         'contacto_telefono',
     ];
+
+    public $platillosVista;//Platillos para retornar a las vistas
   
 public function cliente()
 {

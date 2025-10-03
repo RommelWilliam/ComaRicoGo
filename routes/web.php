@@ -11,6 +11,9 @@ use App\Http\Controllers\CocineroController;
 | Rutas de Cliente
 |--------------------------------------------------------------------------
 */
+Route::get('/', function () {
+    return redirect('/menu');
+});
 Route::post('/registrar', [AuthController::class, 'registrarCliente'])->name('registrar.cliente');
 Route::get('/registrar', function () {
     return view('registrar_cliente');
@@ -24,6 +27,8 @@ Route::post('/login', [AuthController::class, 'login'])->name('login.cliente');
 Route::post('/orden', [OrdenController::class, 'enviar'])->name('orden.enviar');
 Route::post('/orden/{id}/nota', [OrdenController::class, 'guardarNota'])->name('orden.guardarNota');
 Route::get('/orden/{id}/descargar', [OrdenController::class, 'descargarPDF'])->name('orden.descargarPDF');
+
+Route::get('/perfil', [AuthController::class, 'mostrarPerfil'])->name('cliente.perfil');
 
 Route::get('/logout', function () {
     session()->flush();

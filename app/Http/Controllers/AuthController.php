@@ -8,6 +8,10 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Rol;
 use App\Models\UsuarioNegocio;
 use App\Models\Sesion;
+use App\Models\Orden;
+use App\Models\Platillo;
+use App\Models\PlatilloOrden;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -84,6 +88,27 @@ class AuthController extends Controller
         } else {
             return redirect()->back()->with('error', 'Credenciales incorrectas');
         }
+    }
+
+    public function mostrarPerfil()
+    {
+        if (!session()->has('cliente_id')) {
+            return redirect('/login')->withErrors('Inicia sesión o para ver tu perfil');
+        }
+
+        $cliente = Cliente::find(session('cliente_id'));
+        $ordenes = Orden::where('cliente_id', $cliente->id)->where('estado', 'finalizada')->get();
+        foreach ($ordenes as $orden) {
+            $ordenId = $orden->id;
+            $platillos = DB::table('orden_platillo')
+                ->join('platillos', 'orden_platillo.platillo_id', '=', 'platillos.id')
+                ->where('orden_platillo.orden_id', $ordenId)
+                ->select('platillos.nombre', 'orden_platillo.cantidad')
+                ->get();
+            $orden->platillosVista = $platillos;
+        }
+
+        return view('perfil', compact('cliente', 'ordenes'));
     }
 }
 
