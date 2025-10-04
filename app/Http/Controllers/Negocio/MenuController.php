@@ -19,6 +19,7 @@ class MenuController extends Controller
         $platillo = new Platillo();
         $platillo->nombre = $request->nombrePlatillo;
         $platillo->descripcion = $request->descripcionPlatillo;
+        $platillo->categoria = $request->categoriaPlatillo;
         $platillo->precio = $request->precioPlatillo;
         $platillo->cantidad = $request->cantidadPlatillo;
 
@@ -61,6 +62,7 @@ class MenuController extends Controller
         if ($platillo) {
             $platillo->nombre = $request->nombrePlatillo;
             $platillo->precio = $request->precioPlatillo;
+            $platillo->categoria = $request->categoriaPlatillo;
             $platillo->cantidad = $request->cantidadPlatillo;
             if($request->cantidadPlatillo > 0){
                 $platillo->disponible = $request->disponible ? 1 : 0;    

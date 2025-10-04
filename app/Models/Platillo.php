@@ -15,6 +15,7 @@ class Platillo extends Model
         'disponible',
         'descripcion',
         'precio',
+        'categoria',
         'img',
     ];
 

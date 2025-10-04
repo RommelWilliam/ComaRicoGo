@@ -17,6 +17,11 @@
         <input type="text" id="descripcionPlatilloEdit" name="descripcionPlatillo" required
         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"/>
     </div>
+        <div class="mb-3">
+        <label for="categoriaPlatillo" class="form-label ">Categoria</label>
+        <input type="text" id="categoriaPlatillo" name="categoriaPlatillo" required
+        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"/>
+    </div>
     <div class="mb-3">
         <label for="precioPlatillo" class="form-label">Precio del Platillo</label>
         <input type="number" min="0.00" step="0.01" id="precioPlatilloEdit" name="precioPlatillo" required
