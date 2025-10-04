@@ -9,7 +9,7 @@
 </head>
 <body class="">
     <x-top_bar/>
-    <div class="bg-gray-200 p-4 h-full flex">
+    <div class="bg-gray-200 p-4 h-screen flex">
         <div class="border border-gray-200 shadow-lg bg-white rounded-lg mr-5 p-4 w-fit max-h-fit">
             <form action="{{ route('menu.filtrar') }}" method="GET"" class="">
                 <h3 class="font-bold uppercase mb-2 text-center">Categorías</h3>
