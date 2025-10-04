@@ -35,7 +35,7 @@ class CocineroController extends Controller
         $cocineroId = session('usuarioNegocio_id'); 
         
         $ordenes = Orden::where('cocinero_id', $cocineroId)
-            ->where('estado', 'en_preparacion')
+            ->where('estado', 'en_proceso')
             ->orderBy('created_at', 'asc')
             ->with('platillos')
             ->get();
@@ -49,7 +49,7 @@ class CocineroController extends Controller
     public function pendientes()
     {
         $ordenes = Orden::whereNull('cocinero_id')
-            ->where('estado', 'recibido')
+            ->where('estado', 'pendiente')
             ->orderBy('created_at', 'asc')
             ->with('platillos')
             ->get();
@@ -72,7 +72,7 @@ class CocineroController extends Controller
             }
 
             $orden->cocinero_id = $cocineroId;
-            $orden->estado = 'en_preparacion'; // ✅ Ahora pasa a "en preparación"
+            $orden->estado = 'en_proceso'; // ✅ Ahora pasa a "en preparación"
             $orden->save();
         });
 
@@ -91,7 +91,7 @@ class CocineroController extends Controller
             ->where('cocinero_id', $cocineroId)
             ->firstOrFail();
 
-        $orden->estado = 'listo'; 
+        $orden->estado = 'finalizada'; 
         $orden->save();
 
         return redirect()->route('cocinero.ordenesAsignadas')
@@ -106,7 +106,7 @@ class CocineroController extends Controller
         $cocineroId = session('usuarioNegocio_id');
 
         $ordenes = Orden::where('cocinero_id', $cocineroId)
-            ->where('estado', 'listo')
+            ->where('estado', 'finalizada')
             ->with('platillos')
             ->orderBy('updated_at', 'desc')
             ->get();

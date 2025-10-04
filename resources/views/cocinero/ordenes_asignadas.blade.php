@@ -2,13 +2,14 @@
 
 @section('title', 'Órdenes Asignadas')
 
-@section('content')
-    <h1 class="text-2xl font-bold mb-4">Órdenes en Proceso</h1>
+@section('contenido')
+@Vite(['resources/css/app.css'])
+    <h1 class="text-2xl font-bold mb-4 text-center">Órdenes en Proceso</h1>
 
     @if($ordenes->isEmpty())
-        <p class="text-gray-600">No tienes órdenes en proceso.</p>
+        <p class="text-gray-600 text-center">No tienes órdenes en proceso.</p>
     @else
-        <ul class="space-y-4">
+        <ul class="space-y-4 flex flex-wrap gap-6 justify-center">
             @foreach($ordenes as $orden)
                 <li class="p-4 border rounded-lg shadow-sm bg-white">
                     <strong class="text-lg">Orden #{{ $orden->id }}</strong> 

@@ -2,13 +2,14 @@
 
 @section('title', 'Órdenes Pendientes')
 
-@section('content')
-    <h1 class="text-2xl font-bold mb-4">Órdenes Pendientes</h1>
+@section('contenido')
+@Vite(['resources/css/app.css'])
+    <h1 class="text-2xl font-bold mb-4 text-center">Órdenes Pendientes</h1>
 
     @if($ordenes->isEmpty())
-        <p class="text-gray-600">No hay órdenes pendientes.</p>
+        <p class="text-gray-600 text-center">No hay órdenes pendientes.</p>
     @else
-        <ul class="space-y-4">
+        <ul class="space-y-4 flex flex-wrap gap-6 justify-center">
             @foreach($ordenes as $orden)
                 <li class="p-4 border rounded-lg shadow-sm bg-white">
                     <div class="flex justify-between items-center">

@@ -2,7 +2,8 @@
 
 @section('title', 'Órdenes Finalizadas')
 
-@section('content')
+@section('contenido')
+@Vite(['resources/css/app.css'])
     <h1 class="text-2xl font-bold mb-4">Órdenes Finalizadas</h1>
 
     @if($ordenes->isEmpty())
