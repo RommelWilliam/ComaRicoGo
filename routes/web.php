@@ -30,6 +30,12 @@ Route::get('/orden/{id}/descargar', [OrdenController::class, 'descargarPDF'])->n
 
 Route::get('/perfil', [AuthController::class, 'mostrarPerfil'])->name('cliente.perfil');
 
+
+Route::get('/cliente/ordenes', [OrdenController::class, 'historialCliente'])
+    ->name('cliente.ordenes');
+
+
+
 Route::get('/logout', function () {
     session()->flush();
     return redirect('/login');
@@ -113,4 +119,11 @@ Route::middleware(['cocinero.negocio'])->group(function () {
 
     Route::get('/cocinero/ordenes/finalizadas', [CocineroController::class, 'ordenesFinalizadas'])->name('cocinero.ordenesFinalizadas');
     Route::get('/cocinero/notificaciones', [CocineroController::class, 'notificaciones'])->name('cocinero.notificaciones');
+    // Reportes de cocina
+Route::get('/cocinero/reportes', [App\Http\Controllers\CocineroController::class, 'verReportes'])
+    ->name('cocinero.reportes');
+
+Route::post('/cocinero/reportes', [App\Http\Controllers\CocineroController::class, 'registrarReporte'])
+    ->name('cocinero.registrarReporte');
+
 });

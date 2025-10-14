@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Orden;
+use App\Models\ReporteCocina;
+
 use Illuminate\Support\Facades\DB;
 
 class CocineroController extends Controller
@@ -113,4 +115,31 @@ class CocineroController extends Controller
 
         return view('cocinero.ordenes_finalizadas', compact('ordenes'));
     }
+
+
+    
+
+public function verReportes()
+{
+    $reportes = ReporteCocina::where('cocinero_id', session('usuarioNegocio_id'))
+        ->orderBy('fecha_reporte', 'desc')
+        ->get();
+
+    return view('cocinero.reportes', compact('reportes'));
+}
+
+public function registrarReporte(Request $request)
+{
+    $request->validate([
+        'descripcion' => 'required|string|max:1000',
+    ]);
+
+    ReporteCocina::create([
+        'cocinero_id' => session('usuarioNegocio_id'),
+        'descripcion' => $request->descripcion,
+    ]);
+
+    return redirect()->route('cocinero.reportes')->with('success', 'Reporte enviado correctamente.');
+}
+
 }

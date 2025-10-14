@@ -33,6 +33,7 @@
         <a href="{{ route('cocinero.ordenesAsignadas') }}">Mis Órdenes</a> |
         <a href="{{ route('cocinero.ordenesFinalizadas') }}">Órdenes Finalizadas</a> |
         <a href="{{ route('cocinero.notificaciones') }}">Notificaciones</a> |
+        <a href="{{ route('cocinero.reportes') }}">Reportar Falla</a> |
         <a href="{{ route('logout') }}">Cerrar Sesión</a>
     </nav>
 

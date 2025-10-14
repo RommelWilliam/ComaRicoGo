@@ -76,5 +76,29 @@ class OrdenController extends Controller
 
     return view('orden_completa', ['orden' => $orden]);
     }
+
+   public function historialCliente()
+{
+
+    // Verificar que el cliente esté autenticado
+    if (!session()->has('cliente_id')) {
+        return redirect('/login')->with('error', 'Debes iniciar sesión para ver tus órdenes.');
+    }
+
+    $clienteId = session('cliente_id');
+
+    // Traer todas las órdenes del cliente con sus platillos
+    $ordenes = \App\Models\Orden::where('cliente_id', $clienteId)
+        ->with('platillos')
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    return view('cliente.ordeneshistorial', compact('ordenes'));
+}
+ 
+
+    
+
+
 }
 
