@@ -15,6 +15,7 @@ class Orden extends Model
         'nota',
         'contacto_nombre',
         'contacto_telefono',
+        'fecha_finalizado',
     ];
 
     public $platillosVista;//Platillos para retornar a las vistas

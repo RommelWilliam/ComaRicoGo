@@ -46,6 +46,11 @@
                         Gestión de Usuarios y Roles
                     </a>
                 </li>
+                <li>
+                    <a href="{{ route("negocio.admin.historial_ordenes") }}" class="block py-2 px-4 rounded hover:bg-gray-700">
+                        Hidtorial de Órdenes
+                    </a>
+                </li>
             </ul>
         </nav>
     </aside>

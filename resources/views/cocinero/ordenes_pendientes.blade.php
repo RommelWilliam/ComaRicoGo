@@ -11,7 +11,7 @@
     @else
         <ul class="space-y-4 flex flex-wrap gap-6 justify-center">
             @foreach($ordenes as $orden)
-                <li class="p-4 border rounded-lg shadow-sm bg-white">
+                <li class="p-4 bg-white shadow-lg rounded-lg hover:scale-105 hover:border hover:border-orange-400 transition-transform">
                     <div class="flex justify-between items-center">
                         <div>
                             <strong class="text-lg">Orden #{{ $orden->id }}</strong>  

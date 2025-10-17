@@ -94,6 +94,7 @@ class CocineroController extends Controller
             ->firstOrFail();
 
         $orden->estado = 'finalizada'; 
+        $orden->fecha_finalizado = now(); // Guardar la fecha y hora de finalización
         $orden->save();
 
         return redirect()->route('cocinero.ordenesAsignadas')

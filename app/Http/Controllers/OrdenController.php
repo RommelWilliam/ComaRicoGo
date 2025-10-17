@@ -96,6 +96,20 @@ class OrdenController extends Controller
     return view('cliente.ordeneshistorial', compact('ordenes'));
 }
  
+    public function historialOrdenes()
+     {
+          // Verificar que el usuario de negocio esté autenticado
+          if (!session()->has('usuarioNegocio_id')) {
+                return redirect('/negocio/login')->with('error', 'Debes iniciar sesión para ver las órdenes.');
+          }
+    
+          // Traer todas las órdenes con sus platillos y cocineros asignados
+          $ordenes = Orden::with(['platillos', 'cocinero'])
+                ->orderBy('created_at', 'desc')
+                ->get();
+    
+          return view('negocio.historial_ordenes', compact('ordenes'));
+     }
 
     
 

@@ -101,6 +101,9 @@ Route::middleware(['admin.negocio'])->group(function () {
 
     Route::delete('/negocio/admin/gestion/rol/eliminar', [App\Http\Controllers\Negocio\UsuarioRolesController::class, 'eliminarRol'])
         ->name('negocio.admin.eliminar_rol');
+
+    Route::get('/negocio/admin/gestion/ordenes', [App\Http\Controllers\OrdenController::class, 'historialOrdenes'])
+        ->name('negocio.admin.historial_ordenes');
 });
 
 /*
