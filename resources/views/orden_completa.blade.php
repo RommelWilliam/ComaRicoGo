@@ -25,8 +25,11 @@
             <form action="{{ route('orden.calificar') }}" method="POST">
                 @csrf
                 <input type="hidden" name="orden_id" value="{{ $orden->id }}">
-                <x-star-rating name="rating" value="{{ old('rating', isset($rating)? $rating: 0) }}" />
-                <button type="submit">Calificar</button>
+                <textarea name="comentario" id="" cols="80" rows="3" placeholder="Algun comentario" class="outline-none border-2 border-orange-400 p-2"></textarea>
+                <div class="flex flex-col items-center my-4">
+                    <x-star-rating name="rating" value="{{ old('rating', isset($rating)? $rating: 0) }}" />
+                    <button type="submit">Calificar</button>
+                </div>
             </form>
             <a href="/menu" class="my-5 underline text-lg hover:text-orange-500">Volver al menú</a>
         </div>

@@ -120,6 +120,7 @@ class OrdenController extends Controller
     {
         $orden = Orden::findOrFail($request->input('orden_id'));
         $orden->calificacion = $request->input('rating');
+        $orden->comentario = $request->input('comentario');
         $orden->save();
 
         return view('orden_completa', ['orden' => $orden, 
