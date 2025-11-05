@@ -107,11 +107,25 @@ class OrdenController extends Controller
           $ordenes = Orden::with(['platillos', 'cocinero'])
                 ->orderBy('created_at', 'desc')
                 ->get();
-    
-          return view('negocio.historial_ordenes', compact('ordenes'));
+          $promedioCalificaciones = 0;
+          $calificaciones = 0;
+          foreach ($ordenes as $orden) {
+              $calificaciones += $orden->calificacion;
+          }
+          $promedioCalificaciones = count($ordenes) > 0 ? $calificaciones / count($ordenes) : 0;
+          return view('negocio.historial_ordenes', compact('ordenes', 'promedioCalificaciones'));
      }
 
-    
+    public function calificarOrden(Request $request)
+    {
+        $orden = Orden::findOrFail($request->input('orden_id'));
+        $orden->calificacion = $request->input('rating');
+        $orden->save();
+
+        return view('orden_completa', ['orden' => $orden, 
+        'success' => '¡Gracias por calificar tu orden!',
+        'rating' => $orden->calificacion]);
+    }
 
 
 }

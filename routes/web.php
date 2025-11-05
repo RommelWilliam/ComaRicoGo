@@ -34,6 +34,8 @@ Route::get('/perfil', [AuthController::class, 'mostrarPerfil'])->name('cliente.p
 Route::get('/cliente/ordenes', [OrdenController::class, 'historialCliente'])
     ->name('cliente.ordenes');
 
+Route::post('/orden/calificar', [OrdenController::class, 'calificarOrden'])
+    ->name('orden.calificar');
 
 
 Route::get('/logout', function () {
