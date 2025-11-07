@@ -50,7 +50,6 @@
                     @endforelse
                 </tbody>
             </table>
-            <a href="/menu" class="p-4 text-white rounded-lg bg-orange-500 hover:bg-orange-700 font-bold">Regresar a Inicio</a>
         </div>
 
         {{-- Detalles del usuario --}}

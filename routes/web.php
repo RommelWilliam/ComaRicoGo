@@ -5,6 +5,7 @@ use App\Http\Controllers\PlatilloController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrdenController;
 use App\Http\Controllers\CocineroController;
+use App\Http\Controllers\FavoritoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -131,4 +132,26 @@ Route::get('/cocinero/reportes', [App\Http\Controllers\CocineroController::class
 Route::post('/cocinero/reportes', [App\Http\Controllers\CocineroController::class, 'registrarReporte'])
     ->name('cocinero.registrarReporte');
 
+});
+
+// Rutas de Favoritos
+Route::middleware(['cliente.auth'])->group(function () {
+    // Perfil
+    Route::get('/perfil/favoritos', [\App\Http\Controllers\FavoritoController::class, 'index'])
+         ->name('perfil.favoritos');
+
+    // Guardar favorito desde una orden finalizada (Historial)
+    Route::post('/favoritos/from-order/{orden}', [FavoritoController::class, 'storeFromOrder'])
+        ->whereNumber('orden')
+        ->name('favoritos.storeFromOrder');
+
+    // Repetir favorito (1 clic)
+    Route::post('/favoritos/{favorito}/repeat', [FavoritoController::class, 'repeat'])
+        ->whereNumber('favorito')
+        ->name('favoritos.repeat');
+
+    // Eliminar favorito
+    Route::delete('/favoritos/{favorito}', [FavoritoController::class, 'destroy'])
+        ->whereNumber('favorito')
+        ->name('favoritos.destroy');
 });

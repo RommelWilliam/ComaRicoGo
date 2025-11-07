@@ -14,4 +14,9 @@ class Cliente extends Model
         'password',
         'rol',
     ];
+
+    public function favoritos()
+    {
+        return $this->hasMany(Favorito::class, 'cliente_id');
+    }
 }
