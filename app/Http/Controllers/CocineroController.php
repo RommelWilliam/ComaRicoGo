@@ -50,13 +50,25 @@ class CocineroController extends Controller
      */
     public function pendientes()
     {
+        // Obtener órdenes pendientes
         $ordenes = Orden::whereNull('cocinero_id')
             ->where('estado', 'pendiente')
             ->orderBy('created_at', 'asc')
             ->with('platillos')
             ->get();
 
-        return view('cocinero.ordenes_pendientes', compact('ordenes'));
+        // Obtener notificaciones no leídas y marcarlas como leídas
+        $notificaciones = [];
+        if (session()->has('usuarioNegocio_id')) {
+            $usuario = \App\Models\UsuarioNegocio::find(session('usuarioNegocio_id'));
+            if ($usuario) {
+                $notificaciones = $usuario->unreadNotifications;
+                // Marcar como leídas
+                $usuario->unreadNotifications->markAsRead();
+            }
+        }
+
+        return view('cocinero.ordenes_pendientes', compact('ordenes', 'notificaciones'));
     }
 
     /**

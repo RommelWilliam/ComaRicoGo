@@ -23,6 +23,6 @@ class starRating extends Component
      */
     public function render()
     {
-        return view('components.starRating');
+        return view('components.star-rating');
     }
 }

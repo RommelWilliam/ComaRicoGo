@@ -63,6 +63,7 @@ class OrdenController extends Controller
             return $orden;
         });
 
+
         return view('resumen', ['orden' => $orden->load('platillos')]);
     }
 
@@ -73,6 +74,15 @@ class OrdenController extends Controller
      $orden->contacto_nombre = $request->input('contacto_nombre');
     $orden->contacto_telefono = $request->input('contacto_telefono');
     $orden->save();
+
+    // Enviar notificación a todos los usuarios de negocio disponibles
+        try {
+            $usuarios = UsuarioNegocio::all();
+            Notification::send($usuarios, new NuevaOrden($orden));
+        } catch (\Exception $e) {
+            // No interrumpir el flujo por errores en notificaciones; registrar si es necesario
+            // logger()->error('Error enviando notificación de nueva orden: ' . $e->getMessage());
+        }
 
     return view('orden_completa', ['orden' => $orden]);
     }
